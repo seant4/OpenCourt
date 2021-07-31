@@ -2,7 +2,24 @@
 function fetchCourts(){
     fetch('http://localhost:3000/courts')
     .then(res => res.json())
-    .then((out) => { document.getElementById("courts").innerText = JSON.stringify(out); })
+    .then((out) => {
+        console.log(out);
+        const element = document.getElementById("courts")
+        const br = document.createElement("br");
+        for(let i = 0; i < out.length; i++){
+            let para = document.createElement("p");
+            let node = document.createTextNode("Name: " + JSON.stringify(out[i].name));
+            para.appendChild(node);
+            para.appendChild(br);
+            node = document.createTextNode("Location: " + JSON.stringify(out[i].location));
+            para.appendChild(node);
+            para.appendChild(br);
+            node = document.createTextNode("Reservations: " + JSON.stringify(out[i].reserved));
+            para.appendChild(node);
+            para.appendChild(br);
+            element.appendChild(para);
+        }
+    })
     .catch(err => console.log(err));
 }
 
