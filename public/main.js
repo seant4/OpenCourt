@@ -6,11 +6,16 @@ function fetchCourts(){
     .catch(err => console.log(err));
 }
 
-function postReservation(){
-    let data = {court: 'One',
-                reservee: 'Jon',
-                date: '9-10-21',
-                time: '9:21 AM'};
+function postTime(courtName){
+    let data = {court: courtName,
+                reservee: 'Deez',
+                date: '9-12-10',
+                time: '8:43 PM'};
+    
+    postReservation(data);
+}
+
+function postReservation(data){
 
     fetch('http://localhost:3000/courts', {
         method: "POST",
