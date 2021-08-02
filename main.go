@@ -24,13 +24,13 @@ var reservations = []Reservation{
 }
 
 var courts = []Court{
-	{Name: "One", Reserved: reservations, Location: "Deez nuts ave"},
-	{Name: "Two", Reserved: reservations, Location: "Deez nuts lane"},
-	{Name: "Three", Reserved: reservations, Location: "Deez nuts road"},
+	{Name: "One", Reserved: reservations, Location: "Mecklenburg"},
+	{Name: "Two", Reserved: reservations, Location: "Joe mama"},
+	{Name: "Three", Reserved: reservations, Location: "Mecklenburg"},
+	{Name: "Four", Reserved: reservations, Location: "Joe mama"},
 }
 
 func main(){
-
 	app := fiber.New()
 
 	app.Use(cors.New(cors.Config{

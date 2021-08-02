@@ -6,7 +6,6 @@
         <script type="text/javascript" src="main.js"></script>
     </head>
     <body>
-        <p>Courts: </p>
         <br>
         <label for="fname">First name:</label><br>
         <input type="text" id="fname" name="fname"><br>
@@ -24,6 +23,17 @@
 
         <input type="time" id="appt" name="appt"
         min="09:00" max="18:00" required>
+         <br>   
+        <p>Courts: </p>
+
+        <form>
+            <label for="cars">Choose an availible county:</label>
+            <select name="counties" id="county">
+              <option value="Mecklenburg">Mecklenburg</option>
+              <option value="Joe mama">Joe Mama</option>
+            </select>
+            <button onclick="sortByCounty()" type = "button">Submit</button>
+          </form>
 
         <div id = "courts"></div>
 
