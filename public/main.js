@@ -4,25 +4,13 @@ function postTime(courtName, reserveeInput, dateInput, timeInput){
                 reservee: reserveeInput,
                 date: dateInput,
                 time: timeInput};
-                
+
     if(reserveeInput == "" || dateInput == "" || timeInput ==""){
         window.alert("ERROR: Please make sure to input a name, email, time and date!");
     }else{
-        fetch('http://localhost:3000/courts')
-        .then(res => res.json())
-        .then((out) => {
-            for(let i = 0; i < out.length; i++){
-                if(out[i].name == courtName && out[i].date == dateInput && out[i].time == timeInput){
-                    window.alert("This date and time has already been reserved, please try another date or time!");
-                    taken = true;
-                }
-            }
-        })
-        .catch(err => console.log(err));
-        if(taken != true){
-            postReservation(data);
-        }
+        postReservation(data);
     }
+    
 }
 
 function postReservation(data){
