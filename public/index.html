@@ -8,10 +8,23 @@
     <body>
         <p>Courts: </p>
         <br>
-        <button id="1" onclick="postTime('One')">1 availible</button>
-        <button id="2" onclick="postTime('Two')">2 availible</button>
-        <button id="3" onclick="postTime('Three')">3 availible</button>
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" name="fname"><br>
+        <label for="lname">Email</label><br>
+        <input type="text" id="lname" name="lname"><br><br>
+
+        <label for="reservation-date">Choose a date for your reservation:</label>
+        <input type="date" id="reservation"
+       name="trip-start"
+       value="2018-07-22"
+       min="2018-01-01" max="2018-12-31">
         <br>
+
+        <label for="appt">Choose a time for your reservation:</label>
+
+        <input type="time" id="appt" name="appt"
+        min="09:00" max="18:00" required>
+
         <div id = "courts"></div>
 
     </body>
