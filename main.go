@@ -59,19 +59,39 @@ func main(){
 			return ctx.SendStatus(200)
 		}
 
-		updateReservations(reservation);
+		result := updateReservations(reservation);
+		if(!result){
+			return ctx.Status(200).SendString("Reservation successfully made!");
+			
+		}else{
+			return ctx.Status(406).SendString("Reservation is taken, please try a different date or time!");
+
+		}
 		return nil
 	})
 
 	app.Listen(":3000")
 }
 
-func updateReservations(class *Reservation){
+func updateReservations(class *Reservation) (bool){
+	duplicate := false;
 	for  i:=0; i < len(courts); i++ {
 		if ( courts[i].Name == class.Court ){
 			fmt.Println("Found court!");
-			courts[i].Reserved = append(courts[i].Reserved, *class);
-			fmt.Println(courts);
+			for j := 0; j < len(courts[i].Reserved); j++ {
+				if(courts[i].Reserved[j].Date == class.Date && courts[i].Reserved[j].Time == class.Time){
+					fmt.Println("Duplicate");
+					duplicate = true;
+				}
+			}
+			if(!duplicate){
+				courts[i].Reserved = append(courts[i].Reserved, *class);
+				fmt.Println(courts);
+				return duplicate;
+			}else{
+				return duplicate;
+			}
 		}
 	}
+	return duplicate
 }

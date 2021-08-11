@@ -1,5 +1,6 @@
+
+
 function postTime(courtName, reserveeInput, dateInput, timeInput){
-    let taken = false;
     let data = {court: courtName,
                 reservee: reserveeInput,
                 date: dateInput,
@@ -22,7 +23,9 @@ function postReservation(data){
         },
         body: JSON.stringify(data)
     }).then(res => {
-        console.log("request complete, response: ", res);
+        if(res.status == 406){
+            window.alert("This reservation is already taken, please try a different date or time!");
+        }
     });
 }
 
