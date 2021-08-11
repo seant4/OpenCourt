@@ -1,6 +1,8 @@
 package main
 
 import (
+	//"bufio"
+    "os"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"fmt"
@@ -25,12 +27,13 @@ var reservations = []Reservation{
 
 var courts = []Court{
 	{Name: "One", Reserved: reservations, Location: "Mecklenburg"},
-	{Name: "Two", Reserved: reservations, Location: "Joe mama"},
+	{Name: "Two", Reserved: reservations, Location: "Onslow"},
 	{Name: "Three", Reserved: reservations, Location: "Mecklenburg"},
-	{Name: "Four", Reserved: reservations, Location: "Joe mama"},
+	{Name: "Four", Reserved: reservations, Location: "Onslow"},
 }
 
 func main(){
+	go handleInput();
 	app := fiber.New()
 
 	app.Use(cors.New(cors.Config{
@@ -55,8 +58,15 @@ func main(){
 		reservation := new(Reservation)
 
 		if err := ctx.BodyParser(reservation); err != nil {
-			fmt.Println("error = ", err)
-			return ctx.SendStatus(200)
+			if(err.Error() != "json: unexpected end of JSON input: "){
+				f, fileError := os.OpenFile("logs/error.txt", os.O_APPEND|os.O_WRONLY, 0644);
+				fmt.Fprintf(f, "%s", ( err.Error() + "\n"));
+				if(fileError != nil){
+					panic(fileError);
+				}
+				defer f.Close();
+				return ctx.SendStatus(200)
+			}
 		}
 
 		result := updateReservations(reservation);
@@ -67,7 +77,6 @@ func main(){
 			return ctx.Status(406).SendString("Reservation is taken, please try a different date or time!");
 
 		}
-		return nil
 	})
 
 	app.Listen(":3000")
@@ -94,4 +103,22 @@ func updateReservations(class *Reservation) (bool){
 		}
 	}
 	return duplicate
+}
+
+func handleInput(){
+	fmt.Println("Print: Print all reservation data \n Save: Save current data \n Load: Load current data");
+	var input string;
+	fmt.Scanln(&input);
+	if(input == "Print"){
+	
+	}else if(input == "Save"){
+		fmt.Println("Saving data");
+		go handleInput();
+	}else if(input == "load"){
+		fmt.Println("Loading data");
+		go handleInput();
+	}else{
+		fmt.Println("Unrecognized command")
+		go handleInput();
+	}
 }
